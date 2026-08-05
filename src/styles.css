@@ -1,0 +1,294 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f5f5;
+  --panel: #ffffff;
+  --text: #1b1b1b;
+  --muted: #666;
+  --brand: #f9bf3b;
+  --dark: #0f0f0f;
+  --border: #d0d0d0;
+  --danger: #d0342c;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.page-shell,
+.login-page,
+.inventory-page {
+  min-height: 100vh;
+}
+
+.login-page,
+.checkout-page,
+.checkout-complete-page {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.login-container,
+.content-panel {
+  width: min(960px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.login-brand,
+.brand-mark {
+  background: var(--dark);
+  color: var(--brand);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.login-brand {
+  font-size: 2.4rem;
+  text-align: center;
+  padding: 28px 16px;
+  border-radius: 10px 10px 0 0;
+}
+
+.login-card {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  padding: 24px;
+}
+
+.login-form,
+.checkout-form {
+  display: grid;
+  gap: 10px;
+}
+
+.login-form input,
+.checkout-form input,
+.inventory-toolbar select {
+  padding: 12px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+.credentials-panel,
+.inventory-toolbar,
+.cart-summary,
+.empty-state,
+.totals-block {
+  background: #fafafa;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.credentials-panel {
+  padding: 16px;
+}
+
+.panel-title {
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+
+.error-message {
+  background: #fff2f2;
+  color: var(--danger);
+  border: 1px solid #f1b3b0;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+
+.primary-button,
+.secondary-button,
+.cart-button,
+.back-link {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 10px 16px;
+  font-weight: 700;
+}
+
+.primary-button,
+.cart-button {
+  background: var(--brand);
+  color: #111;
+}
+
+.secondary-button,
+.back-link {
+  background: #ececec;
+  color: #111;
+  border-color: var(--border);
+}
+
+.inventory-page {
+  padding: 18px;
+}
+
+.inventory-header,
+.shell-header,
+.cart-footer,
+.button-row,
+.product-footer,
+.cart-item,
+.overview-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.inventory-header {
+  margin-bottom: 18px;
+}
+
+.inventory-subtitle,
+.shell-title {
+  color: var(--muted);
+}
+
+.inventory-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 18px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.product-card,
+.cart-item {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.product-card {
+  overflow: hidden;
+}
+
+.product-image {
+  height: 140px;
+  background: linear-gradient(135deg, #efefef, #d9d9d9);
+}
+
+.product-content {
+  padding: 16px;
+}
+
+.product-content p,
+.empty-state,
+.cart-summary,
+.totals-block,
+.overview-list {
+  color: var(--muted);
+}
+
+.product-footer {
+  margin-top: 16px;
+}
+
+.cart-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--dark);
+  color: var(--brand);
+  font-weight: 800;
+}
+
+.content-panel {
+  padding: 20px;
+}
+
+.cart-page .content-panel,
+.checkout-page .content-panel,
+.checkout-complete-page .content-panel {
+  width: min(900px, 100%);
+}
+
+.cart-list,
+.overview-list {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.cart-item,
+.overview-row {
+  padding: 14px;
+  background: #fff;
+}
+
+.cart-footer,
+.button-row {
+  margin-top: 12px;
+}
+
+.empty-state,
+.totals-block,
+.cart-summary {
+  padding: 14px;
+}
+
+.grand-total {
+  color: var(--text);
+  font-weight: 800;
+}
+
+.pony-express {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.complete-panel {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .login-card {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-header,
+  .shell-header,
+  .cart-footer,
+  .button-row,
+  .product-footer,
+  .cart-item,
+  .overview-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
