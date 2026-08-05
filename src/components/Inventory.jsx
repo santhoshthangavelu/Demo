@@ -1,60 +1,60 @@
 import React, { useMemo, useState } from 'react';
-
-const PRODUCTS = [
-  { id: 'sauce-labs-backpack', name: 'Sauce Labs Backpack', price: 29.99, description: 'Carry all the things with the streamlined, easy-to-use backpack.' },
-  { id: 'sauce-labs-bike-light', name: 'Sauce Labs Bike Light', price: 9.99, description: 'A red light to keep you safe on the road.' },
-  { id: 'sauce-labs-bolt-t-shirt', name: 'Sauce Labs Bolt T-Shirt', price: 15.99, description: 'Get to work with a comfy shirt featuring the Sauce Labs bolt.' },
-  { id: 'sauce-labs-fleece-jacket', name: 'Sauce Labs Fleece Jacket', price: 49.99, description: 'Truly the most comfortable jacket you will ever wear.' }
-];
+import { PRODUCTS, SORT_OPTIONS, sortProducts } from '../data/products';
 
 export default function Inventory() {
   const [sort, setSort] = useState('az');
   const [cart, setCart] = useState([]);
 
-  const sortedProducts = useMemo(() => {
-    const items = [...PRODUCTS];
-    switch (sort) {
-      case 'za':
-        return items.sort((a, b) => b.name.localeCompare(a.name));
-      case 'low-high':
-        return items.sort((a, b) => a.price - b.price);
-      case 'high-low':
-        return items.sort((a, b) => b.price - a.price);
-      default:
-        return items.sort((a, b) => a.name.localeCompare(b.name));
-    }
-  }, [sort]);
+  const sortedProducts = useMemo(() => sortProducts(PRODUCTS, sort), [sort]);
 
   const toggleCart = (id) => {
     setCart((current) =>
-      current.includes(id) ? current.filter((item) => item !== id) : [...current, id]
+      current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
     );
   };
 
   return (
     <main className="inventory-page">
       <header className="inventory-header">
-        <h1>Swag Labs</h1>
-        <div className="cart-badge">{cart.length}</div>
+        <div>
+          <div className="brand-mark">Swag Labs</div>
+          <div className="inventory-subtitle">Products</div>
+        </div>
+        <button className="cart-button" aria-label={`Cart has ${cart.length} items`}>
+          Cart <span className="cart-badge">{cart.length}</span>
+        </button>
       </header>
-      <label htmlFor="sort">Sort</label>
-      <select id="sort" value={sort} onChange={(e) => setSort(e.target.value)}>
-        <option value="az">Name (A to Z)</option>
-        <option value="za">Name (Z to A)</option>
-        <option value="low-high">Price (low to high)</option>
-        <option value="high-low">Price (high to low)</option>
-      </select>
+
+      <section className="inventory-toolbar">
+        <label htmlFor="sort">Sort Products</label>
+        <select id="sort" value={sort} onChange={(e) => setSort(e.target.value)}>
+          {Object.entries(SORT_OPTIONS).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </section>
+
       <section className="product-grid">
-        {sortedProducts.map((product) => (
-          <article key={product.id} className="product-card">
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            <strong>${product.price.toFixed(2)}</strong>
-            <button onClick={() => toggleCart(product.id)}>
-              {cart.includes(product.id) ? 'Remove from Cart' : 'Add to Cart'}
-            </button>
-          </article>
-        ))}
+        {sortedProducts.map((product) => {
+          const inCart = cart.includes(product.id);
+          return (
+            <article key={product.id} className="product-card">
+              <div className="product-image" aria-hidden="true" />
+              <div className="product-content">
+                <h2>{product.name}</h2>
+                <p>{product.description}</p>
+                <div className="product-footer">
+                  <strong>${product.price.toFixed(2)}</strong>
+                  <button className={inCart ? 'secondary-button' : 'primary-button'} onClick={() => toggleCart(product.id)}>
+                    {inCart ? 'Remove from Cart' : 'Add to Cart'}
+                  </button>
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </section>
     </main>
   );
