@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-
-const VALID_USERS = {
-  standard_user: 'secret_sauce',
-  locked_out_user: 'secret_sauce',
-  problem_user: 'secret_sauce',
-  performance_glitch_user: 'secret_sauce',
-  error_user: 'secret_sauce',
-  visual_user: 'secret_sauce'
-};
+import { USERS } from '../data/products';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -16,37 +8,75 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!username || !password) {
+
+    if (!username.trim()) {
       setError('Epic sadface: Username is required');
       return;
     }
+
+    if (!password.trim()) {
+      setError('Epic sadface: Password is required');
+      return;
+    }
+
     if (username === 'locked_out_user') {
       setError('Epic sadface: Sorry, this user has been locked out.');
       return;
     }
-    if (VALID_USERS[username] !== password) {
+
+    if (USERS[username] !== password) {
       setError('Epic sadface: Username and password do not match any user in this service');
       return;
     }
+
     window.location.href = '/inventory.html';
   };
 
   return (
     <main className="login-page">
-      <section className="login-box">
-        <h1>Swag Labs</h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="user-name">Username</label>
-          <input id="user-name" value={username} onChange={(e) => setUsername(e.target.value)} />
-          <label htmlFor="password">Password</label>
-          <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          {error ? <div className="error-message">{error}</div> : null}
-          <button type="submit">Login</button>
-        </form>
-        <div className="credentials">
-          <p>Accepted usernames are:</p>
-          <p>{Object.keys(VALID_USERS).join(', ')}</p>
-          <p>Password for all users: secret_sauce</p>
+      <section className="login-container">
+        <div className="login-brand">Swag Labs</div>
+        <div className="login-card">
+          <form className="login-form" onSubmit={handleSubmit}>
+            <label htmlFor="user-name">Username</label>
+            <input
+              id="user-name"
+              name="user-name"
+              autoComplete="username"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+                setError('');
+              }}
+            />
+
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError('');
+              }}
+            />
+
+            {error ? <div className="error-message" role="alert">{error}</div> : null}
+            <button type="submit" className="primary-button">Login</button>
+          </form>
+
+          <aside className="credentials-panel" aria-label="Login credentials">
+            <p className="panel-title">Accepted usernames are:</p>
+            <ul>
+              {Object.keys(USERS).map((user) => (
+                <li key={user}>{user}</li>
+              ))}
+            </ul>
+            <p className="panel-title">Password for all users:</p>
+            <p>secret_sauce</p>
+          </aside>
         </div>
       </section>
     </main>
